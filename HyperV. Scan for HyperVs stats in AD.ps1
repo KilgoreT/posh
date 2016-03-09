@@ -21,54 +21,36 @@ foreach ($hpv in $all) {
             $RunVMs = Get-VM -ComputerName $hpv | where State -eq "Running"
             $AllVMsC = $AllVMs.Count
             $RunVMsC = $RunVMs.Count
-            #Write-Host "all: " $AllVMs.Count
-            #Write-Host "run: " $RunVMs.Count
             }
-            else {
-             #   "No connection!"
+        else {
                 $is_online = $false
                 $AllVMsC = 0
                 $RunVMsC = 0
                  }
         }
-        elseif ($version.OperatingSystem -match "2008") {
-        #Write-Host $hpv ": " $version.OperatingSystem
-        if (Test-Connection $hpv -Count 1 -Quiet) {
-                $vms = Get-WmiObject -Class Msvm_ComputerSystem -Namespace "root\virtualization" -ComputerName $hpv
-              
+    elseif ($version.OperatingSystem -match "2008") {
+            if (Test-Connection $hpv -Count 1 -Quiet) {
+                $vms = Get-WmiObject -Class Msvm_ComputerSystem -Namespace "root\virtualization" -ComputerName $hpv  
                 $AllVMs = $vms | where-object{$_.caption -ne "Hosting Computer System"}
-                # ft ElementName, enabledstate -AutoSize
-                #Write-Host "All: " $AllVMs | ft ElementName, enabledstate -AutoSize
                 $RunVMs = $AllVMs | where-object{$_.enabledstate -match "2"}
-                #Write-Host "Run: " $RunVMs | ft ElementName, enabledstate -AutoSize
-                #Write-Host "all: " $AllVMs.Count
-                #Write-Host "run: " $RunVMs.Count
                 $AllVMsC = $AllVMs.Count
                 $RunVMsC = $RunVMs.Count
-                
-                
-              
          }
-         else {
-         "#No Connection!"
-         $is_online = $false
+    else {
+            $is_online = $false
          }
          
   
    } 
-   $hvstats = "" | Select "host", "AllVmCount", "RunVmCount", "OSVersion"
+
+   $hvstats = "" | Select "host", "AllVmCount", "RunVmCount", "OSVersion", "IsOnline"
    $hvstats.host = $hpv
    $hvstats.AllVmCount = $AllVMsC
    $hvstats.RunVmCount = $RunVMsC
    $hvstats.OSVersion = $version.OperatingSystem
+   $hvstats.ISOnline = $is_online
    $stats += $hvstats
    $hvstats = $null
-
-
-
-   #$str =  "$hpv  ";"  $AllVMsC ";" $RunVMsC ";" $version.OperatingSystem" 
-    # Write-Output $hpv + ";" + $AllVMsC + ";" + $RunVMsC + ";" + $version.OperatingSystem >> C:\Users\apomazkin-adm\Desktop\script\HyperV.txt
-     #Write-Output $str
 }
 
 
