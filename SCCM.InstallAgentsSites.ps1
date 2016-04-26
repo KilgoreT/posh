@@ -1,4 +1,8 @@
-﻿# Function to get adsite of same pc.
+﻿import-module ($Env:SMS_ADMIN_UI_PATH.Substring(0,$Env:SMS_ADMIN_UI_PATH.Length-5) + '\ConfigurationManager.psd1')
+$PSD = Get-PSDrive -PSProvider CMSite
+CD "$($PSD):"
+
+# Function to get adsite of same pc.
 
 function Get-ComputerSite($ComputerName)
 {
@@ -22,10 +26,16 @@ function Get-ComputerSite($ComputerName)
         $IsActive = Get-CMDevice -Name $comp.Name
         if ($IsActive.IsActive -eq "True") {
             Write-Host "Agent Already Installed!"
-        } else {Write-Host "Agent Not Installed."}
+        } else {
+            Write-Host "Agent Not Installed."
+           # Get-CMDevice -Name $comp.Name | 
+           Install-CMClient -DeviceName $comp.Name -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
+                }
     }
  }
  
  
  
- Get-ComputerSite k1109012
+# Get-ComputerSite k1109012
+ 
+#PS CCM:\> Install-CMClient -Name K1103009 -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
