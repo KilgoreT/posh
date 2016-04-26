@@ -36,6 +36,3 @@ function Get-ComputerSite($ComputerName)
  
  
  
-# Get-ComputerSite k1109012
- 
-#PS CCM:\> Install-CMClient -Name K1103009 -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
