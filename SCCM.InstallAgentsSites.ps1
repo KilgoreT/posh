@@ -29,7 +29,7 @@ function Get-ComputerSite($ComputerName)
         } else {
             Write-Host "Agent Not Installed."
            # Get-CMDevice -Name $comp.Name | 
-           Install-CMClient -DeviceName $comp.Name -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
+           Install-CMClient -DeviceName $comp.Name -ForceReinstall $true -AlwaysInstallClient $true -IncludeDomainController $true -SiteCode CCM
                 }
     }
  }
