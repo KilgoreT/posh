@@ -20,7 +20,7 @@ function Get-ComputerSite($ComputerName)
  foreach ($comp in $all) {
     $site = Get-ComputerSite $comp.Name
    # Write-Host $site ": " $comp.Name
-    if ( ($site -eq "sh") -or ($site -eq "ms") -or ($site -eq "klm") ) {
+    if ($site -eq "ms") {
         Write-Host $site ": " $comp.Name
         $all_sites += $comp.Name
         $IsActive = Get-CMDevice -Name $comp.Name
