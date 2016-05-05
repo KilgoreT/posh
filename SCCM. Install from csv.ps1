@@ -6,14 +6,15 @@ $pcs = Import-Csv -Path C:\temp\allsites.csv
 
 foreach ($i in $pcs) {
 
-    if ($i.CSite -eq "kln") {
+    if ($i.CSite -eq "msk") {
         $IsActive = Get-CMDevice -Name $i.CName
         if ($IsActive.IsActive -eq "True") {
                 Write-Host $i.CName ": Agent Already Installed!"
         } else {
                 Write-Host $i.CName ": Agent Not Installed."
-                # Get-CMDevice -Name $comp.Name | 
-                 Install-CMClient -DeviceName $i.CName -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
+                #Install-CMClient -DeviceName $i.CName -ForceReinstall $true -AlwaysInstallClient $true -IncludeDomainController $true -SiteCode CCM
+                Install-CMClient -DeviceName $i.CName -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
+                sleep 60
                 }
                 
    }
