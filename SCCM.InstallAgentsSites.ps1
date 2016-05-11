@@ -20,14 +20,18 @@ function Get-ComputerSite($ComputerName)
  foreach ($comp in $all) {
     $site = Get-ComputerSite $comp.Name
    # Write-Host $site ": " $comp.Name
-    if ($site -eq "ms") {
-        Write-Host $site ": " $comp.Name
+    if (($site -eq "clo") -or ($site -eq "ur") -or ($site -eq "sib") `
+        -or ($site -eq "ms") -or ($site -eq "sh") -or ($site -eq "hq") `
+        -or ($site -eq "chl") -or ($site -eq "prm") -or ($site -eq "msk") `
+        -or ($site -eq "klm") -or ($site -eq "kln") -or ($site -eq "krs") -or ($site -eq "nv") -or ($site -eq "ra")) `
+    {
+        #Write-Host $site ": " $comp.Name
         $all_sites += $comp.Name
         $IsActive = Get-CMDevice -Name $comp.Name
         if ($IsActive.IsActive -eq "True") {
-            Write-Host "Agent Already Installed!"
+            Write-Host $site ": " $comp.Name "`t`t--- agent already installed!" -ForegroundColor Green
         } else {
-            Write-Host "Agent Not Installed."
+            Write-Host $site ": " $comp.Name "`t`t--- agent not installed." -ForegroundColor Red
            # Get-CMDevice -Name $comp.Name | 
            Install-CMClient -DeviceName $comp.Name -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
                 }
