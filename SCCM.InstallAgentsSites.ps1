@@ -10,6 +10,7 @@ function Get-ComputerSite($ComputerName)
    if($LASTEXITCODE -eq 0){ $site[0] }
 }
  
+# sleep 1800
 
 # Empty array to put pc from selected site.
  $all_sites = @()
@@ -20,10 +21,15 @@ function Get-ComputerSite($ComputerName)
  foreach ($comp in $all) {
     $site = Get-ComputerSite $comp.Name
    # Write-Host $site ": " $comp.Name
-    if (($site -eq "clo") -or ($site -eq "ur") -or ($site -eq "sib") `
+    if (
+        $comp.Name -ne "SCCM2012"
+        <#($site -eq "clo") -or ($site -eq "ur") -or ($site -eq "sib") `
         -or ($site -eq "ms") -or ($site -eq "sh") -or ($site -eq "hq") `
         -or ($site -eq "chl") -or ($site -eq "prm") -or ($site -eq "msk") `
-        -or ($site -eq "klm") -or ($site -eq "kln") -or ($site -eq "krs") -or ($site -eq "nv") -or ($site -eq "ra")) `
+        -or ($site -eq "klm") -or ($site -eq "kln") -or ($site -eq "krs") -or ($site -eq "nv") -or ($site -eq "ra")
+        #>
+
+        ) `
     {
         #Write-Host $site ": " $comp.Name
         $all_sites += $comp.Name
@@ -35,6 +41,9 @@ function Get-ComputerSite($ComputerName)
            # Get-CMDevice -Name $comp.Name | 
            Install-CMClient -DeviceName $comp.Name -ForceReinstall $true -AlwaysInstallClient $true -SiteCode CCM
                 }
+    }
+    else {
+        Write-Host "SCCM2012 is not include." -ForegroundColor Cyan
     }
  }
  
