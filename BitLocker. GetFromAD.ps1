@@ -4,4 +4,4 @@
 #$regexp = 'CN.*'
 
 $BitLockerObjects = Get-ADObject -Filter {objectclass -eq 'msFVE-RecoveryInformation'} -Properties 'msFVE-RecoveryPassword'
-$BitLockerObjects | ft DistinguishedName
+$BitLockerObjects | ft DistinguishedName > bitlocker.txt
