@@ -1,7 +1,7 @@
 ﻿$stats = @()
 
 #$all = Get-Item -Path \\inventar\aida-report\*
-$1date = (get-date -Date "00:00:00").AddDays(-1)
+$1date = (get-date -Date "00:00:00").AddDays(-5)
 #$2date = (get-date -Date "00:00:00")
 $2date = (get-date)
 #$stats = Get-ChildItem -Path \\inventar\aida-report\* -Recurse -Include *.txt | where { ($_.LastWriteTime -lt $2date) -and ($_.LastWriteTime -gt $1date)}

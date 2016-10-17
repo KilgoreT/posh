@@ -11,6 +11,7 @@ foreach ($dc in $dcs) {
     $all += Get-EventLog -ComputerName $dc -LogName Security -Newest 1000 | ?{($_.eventid -ge "6272") -and ($_.eventid -le "6280")} 
     #| select MachineName,Time,EventID,EntryType,Message
 
+
 }
 
 if ($all) { 
